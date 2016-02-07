@@ -9,6 +9,8 @@ import React, {
   ActivityIndicatorIOS,
 } from 'react-native';
 
+import Story from './Story';
+
 import api from '../api.js';
 
 class List extends Component {
@@ -25,19 +27,18 @@ class List extends Component {
 
   renderStory(story) {
     return (
-      <TouchableHighlight
+      <Story
+        title={story.title}
+        hostname={story.hostname}
+        vote_count={story.vote_count}
         onPress={() => {
           this.props.navigator.push({
             name: 'Details',
             url: story.url,
           });
         }}
-        style={styles.row}>
-        <View>
-          <Text style={styles.title}>{story.title}</Text>
-          <Text style={styles.votes}>{story.vote_count}</Text>
-        </View>
-      </TouchableHighlight>
+      />
+
     );
   }
 
@@ -88,13 +89,6 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-  },
-  row: {
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-  },
-  title: {
-    fontSize: 16,
   },
   listView: {
     paddingTop: 20,

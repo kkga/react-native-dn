@@ -9,7 +9,7 @@ import React, {
   ActivityIndicatorIOS,
 } from 'react-native';
 
-const REQUEST_URL = 'https://www.designernews.co/api/v2/stories';
+import api from '../api.js';
 
 class List extends Component {
   constructor(props) {
@@ -20,22 +20,22 @@ class List extends Component {
       }),
       loading: true,
     };
-    this.renderPost = this.renderPost.bind(this);
+    this.renderStory = this.renderStory.bind(this);
   }
 
-  renderPost(post) {
+  renderStory(story) {
     return (
       <TouchableHighlight
         onPress={() => {
           this.props.navigator.push({
             name: 'Details',
-            url: post.url,
+            url: story.url,
           });
         }}
         style={styles.row}>
         <View>
-          <Text style={styles.title}>{post.title}</Text>
-          <Text style={styles.votes}>{post.vote_count}</Text>
+          <Text style={styles.title}>{story.title}</Text>
+          <Text style={styles.votes}>{story.vote_count}</Text>
         </View>
       </TouchableHighlight>
     );
@@ -49,7 +49,7 @@ class List extends Component {
     return (
       <ListView
         dataSource={this.state.dataSource}
-        renderRow={this.renderPost}
+        renderRow={this.renderStory}
         style={styles.listView}
         renderSeparator={(sectionID, rowID) => <View key={`${sectionID}-${rowID}`} style={styles.separator} />}
       />
@@ -61,7 +61,7 @@ class List extends Component {
   }
 
   fetchData() {
-    fetch(REQUEST_URL)
+    fetch(api.DN_STORIES)
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({

@@ -6,8 +6,8 @@ import React, {
   Navigator,
 } from 'react-native';
 
-import List from './List';
-import Details from './Details';
+import List from './App/Components/List';
+import Details from './App/Components/Details';
 
 class App extends Component {
   renderScene(route, navigator) {

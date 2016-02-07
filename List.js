@@ -9,10 +9,7 @@ import React, {
   ActivityIndicatorIOS,
 } from 'react-native';
 
-const API_URL = 'http://rss2json.com/api.json';
-const DN_RSS = 'https://www.designernews.co/?format=rss';
-const PARAMS = '?rss_url=' + DN_RSS;
-const REQUEST_URL = API_URL + PARAMS;
+const REQUEST_URL = 'https://www.designernews.co/api/v2/stories';
 
 class List extends Component {
   constructor(props) {
@@ -32,13 +29,13 @@ class List extends Component {
         onPress={() => {
           this.props.navigator.push({
             name: 'Details',
-            url: post.link,
+            url: post.url,
           });
         }}
         style={styles.row}>
         <View>
           <Text style={styles.title}>{post.title}</Text>
-          <Text style={styles.title}>{post.link}</Text>
+          <Text style={styles.votes}>{post.vote_count}</Text>
         </View>
       </TouchableHighlight>
     );
@@ -68,7 +65,7 @@ class List extends Component {
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({
-          dataSource: this.state.dataSource.cloneWithRows(responseData.items),
+          dataSource: this.state.dataSource.cloneWithRows(responseData.stories),
           loading: false,
         });
       })

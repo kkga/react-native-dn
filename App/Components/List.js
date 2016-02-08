@@ -48,12 +48,14 @@ class List extends Component {
     }
 
     return (
-      <ListView
-        dataSource={this.state.dataSource}
-        renderRow={this.renderStory}
-        style={styles.listView}
-        renderSeparator={(sectionID, rowID) => <View key={`${sectionID}-${rowID}`} style={styles.separator} />}
-      />
+      <View style={styles.container}>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this.renderStory}
+          style={styles.listView}
+          renderSeparator={(sectionID, rowID) => <View key={`${sectionID}-${rowID}`} style={styles.separator} />}
+        />
+      </View>
     );
   }
 
@@ -75,7 +77,7 @@ class List extends Component {
 
   renderLoadingView() {
     return (
-      <View style={styles.container}>
+      <View style={styles.loadingContainer}>
         <ActivityIndicatorIOS size="large"/>
       </View>
     );
@@ -83,20 +85,20 @@ class List extends Component {
 }
 
 var styles = StyleSheet.create({
-  container: {
+  loadingContainer: {
     flex: 1,
-    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+  },
+  container: {
+    flex: 1,
   },
   listView: {
-    paddingTop: 20,
-    backgroundColor: '#F5FCFF',
+    marginTop: 20,
   },
   separator: {
     height: 1,
-    backgroundColor: '#CCCCCC',
+    backgroundColor: '#EFEFEF',
   }
 });
 

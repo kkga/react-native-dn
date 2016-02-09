@@ -1,21 +1,29 @@
-'use strict';
 import React, {
   Component,
+  PropTypes,
   StyleSheet,
   Text,
   View,
-  TouchableHighlight,
+  TouchableOpacity,
 } from 'react-native';
 
 class Story extends Component {
+
+  static propTypes = {
+    hostname: PropTypes.string,
+    onPress: PropTypes.func.isRequired,
+    title: PropTypes.string.isRequired,
+    vote_count: PropTypes.number.isRequired,
+  };
+
   render() {
-    var topStory = this.props.vote_count > 10;
+    const topStory = this.props.vote_count > 50;
 
     return (
-      <TouchableHighlight onPress={this.props.onPress}>
+      <TouchableOpacity onPress={this.props.onPress}>
         <View style={styles.container}>
           <View style={styles.voteContainer}>
-            <View style={topStory ? styles.voteLabelTop : styles.voteLabel}>
+            <View style={[styles.voteLabel, topStory && styles.voteLabelTop]}>
               <Text style={styles.voteCount}>
                 {this.props.vote_count}
               </Text>
@@ -32,12 +40,12 @@ class Story extends Component {
             </View>
           </View>
         </View>
-      </TouchableHighlight>
+      </TouchableOpacity>
     );
   }
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     paddingVertical: 12,
@@ -53,15 +61,11 @@ var styles = StyleSheet.create({
     paddingHorizontal: 4,
     paddingVertical: 3,
     borderRadius: 3,
-    width: 28,
-    backgroundColor: '#EFEFEF'
+    width: 30,
+    backgroundColor: '#EFEFEF',
   },
   voteLabelTop: {
-    paddingHorizontal: 4,
-    paddingVertical: 3,
-    borderRadius: 3,
-    width: 28,
-    backgroundColor: 'green'
+    backgroundColor: 'green',
   },
   voteCount: {
     fontSize: 12,
@@ -80,7 +84,7 @@ var styles = StyleSheet.create({
   source: {
     fontSize: 10,
     fontWeight: '500',
-  }
+  },
 });
 
 module.exports = Story;

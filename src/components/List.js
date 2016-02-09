@@ -1,19 +1,21 @@
-'use strict';
 import React, {
   Component,
+  PropTypes,
   ListView,
   StyleSheet,
-  Text,
   View,
-  TouchableHighlight,
   ActivityIndicatorIOS,
 } from 'react-native';
 
-import Story from './Story';
-
+import Story from './Story.js';
 import api from '../api.js';
 
 class List extends Component {
+
+  static propTypes = {
+    navigator: PropTypes.object,
+  };
+
   constructor(props) {
     super(props);
     this.state = {
@@ -22,45 +24,19 @@ class List extends Component {
       }),
       loading: true,
     };
-    this.renderStory = this.renderStory.bind(this);
-  }
-
-  renderStory(story) {
-    return (
-      <Story
-        title={story.title}
-        hostname={story.hostname}
-        vote_count={story.vote_count}
-        onPress={() => {
-          this.props.navigator.push({
-            name: 'Details',
-            url: story.url,
-          });
-        }}
-      />
-
-    );
-  }
-
-  render() {
-    if (this.state.loading) {
-      return this.renderLoadingView();
-    }
-
-    return (
-      <View style={styles.container}>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this.renderStory}
-          style={styles.listView}
-          renderSeparator={(sectionID, rowID) => <View key={`${sectionID}-${rowID}`} style={styles.separator} />}
-        />
-      </View>
-    );
+    this.renderRow = this.renderRow.bind(this);
+    this.onPress = this.onPress.bind(this);
   }
 
   componentDidMount() {
     this.fetchData();
+  }
+
+  onPress(rowData) {
+    this.props.navigator.push({
+      name: 'Details',
+      url: rowData.url,
+    });
   }
 
   fetchData() {
@@ -82,9 +58,42 @@ class List extends Component {
       </View>
     );
   }
+
+  renderSeparator() {
+    return (
+      <View style={styles.separator} />
+    );
+  }
+
+  renderRow(rowData) {
+    return (
+      <Story
+        hostname={rowData.hostname}
+        title={rowData.title}
+        vote_count={rowData.vote_count}
+        onPress={() => this.onPress(rowData)}
+      />
+    );
+  }
+
+  render() {
+    if (this.state.loading) {
+      return this.renderLoadingView();
+    }
+
+    return (
+      <View style={styles.container}>
+        <ListView
+          dataSource={this.state.dataSource}
+          renderRow={this.renderRow}
+          renderSeparator={this.renderSeparator}
+        />
+      </View>
+    );
+  }
 }
 
-var styles = StyleSheet.create({
+const styles = StyleSheet.create({
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
@@ -93,13 +102,10 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  listView: {
-    marginTop: 20,
-  },
   separator: {
     height: 1,
     backgroundColor: '#EFEFEF',
-  }
+  },
 });
 
 module.exports = List;

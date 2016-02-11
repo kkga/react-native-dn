@@ -14,10 +14,13 @@ class Story extends Component {
     onPress: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
     vote_count: PropTypes.number.isRequired,
+    created_at: PropTypes.string,
+    comment_count: PropTypes.number.isRequired,
   };
 
   render() {
     const topStory = this.props.vote_count > 50;
+    const date = new Date(this.props.created_at);
 
     return (
       <TouchableOpacity onPress={this.props.onPress}>
@@ -31,12 +34,17 @@ class Story extends Component {
           </View>
 
           <View style={styles.infoContainer}>
-            <Text style={styles.title}>{this.props.title}</Text>
-
             <View style={styles.meta}>
               {this.props.hostname &&
                 <Text style={styles.source}>{this.props.hostname.toUpperCase()}</Text>
               }
+            </View>
+            <Text style={styles.title}>{this.props.title}</Text>
+
+            <View style={styles.meta}>
+              <Text>{date.toDateString()}</Text>
+              <Text> - {this.props.id} - </Text>
+              <Text>{this.props.comment_count} comments</Text>
             </View>
           </View>
         </View>
@@ -76,6 +84,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '500',
     marginBottom: 12,
+    marginTop: 6,
   },
   meta: {
     flexDirection: 'row',

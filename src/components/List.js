@@ -111,6 +111,7 @@ class List extends Component {
         dataSource={this.state.dataSource}
         renderRow={this.renderRow}
         renderSeparator={this.renderSeparator}
+        style={styles.list}
         refreshControl={
           <RefreshControl
             refreshing={this.state.isRefreshing}
@@ -126,6 +127,10 @@ class List extends Component {
 }
 
 const styles = StyleSheet.create({
+  list: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',

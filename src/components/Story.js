@@ -96,4 +96,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = Story;
+export default Story;

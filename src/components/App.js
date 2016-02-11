@@ -2,10 +2,12 @@ import React, {
   Component,
   Navigator,
   StyleSheet,
+  View,
+  StatusBarIOS,
 } from 'react-native';
 
-import List from './List.js';
-import Details from './Details.js';
+import Home from './Home';
+import Details from './Details';
 
 class App extends Component {
 
@@ -16,9 +18,11 @@ class App extends Component {
   renderScene(route, navigator) {
     switch (route.name) {
       default:
-      case 'List':
-        return <List navigator={navigator} />;
+      case 'Home':
+        StatusBarIOS.setHidden(false, 'slide');
+        return <Home navigator={navigator} />;
       case 'Details':
+        StatusBarIOS.setHidden(true, 'slide');
         return (
           <Details
             navigator={navigator}
@@ -30,20 +34,21 @@ class App extends Component {
 
   render() {
     return (
-      <Navigator
-        configureScene={this.configureScene}
-        initialRoute={{ name: 'List', index: 0 }}
-        renderScene={this.renderScene}
-        style={styles.container}
-      />
+      <View style={styles.container}>
+        <Navigator
+          configureScene={this.configureScene}
+          initialRoute={{ name: 'Home', index: 0 }}
+          renderScene={this.renderScene}
+        />
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 20,
+    flex: 1,
   },
 });
 
-module.exports = App;
+export default App;

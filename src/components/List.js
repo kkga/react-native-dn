@@ -4,19 +4,18 @@ import React, {
   ListView,
   StyleSheet,
   View,
-  Text,
   ActivityIndicatorIOS,
-  TouchableOpacity,
   RefreshControl,
 } from 'react-native';
 
-import Story from './Story.js';
-import api from '../api.js';
+import Story from './Story';
+import api from '../api';
 
 class List extends Component {
 
   static propTypes = {
     navigator: PropTypes.object,
+    storiesType: PropTypes.oneOf(['topStories', 'recentStories']),
   };
 
   constructor(props) {
@@ -24,7 +23,6 @@ class List extends Component {
     this.state = {
       isLoading: true,
       isRefreshing: false,
-      requestUrl: api.DN_TOP,
       dataSource: new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       }),
@@ -45,25 +43,6 @@ class List extends Component {
     });
   }
 
-  onChangeSorting(sorting) {
-    switch (sorting) {
-      default:
-      case 'top':
-        this.setState({
-          isLoading: true,
-          requestUrl: api.DN_TOP,
-        });
-        this.fetchData();
-        break;
-      case 'recent':
-        this.setState({
-          isLoading: true,
-          requestUrl: api.DN_RECENT,
-        });
-        this.fetchData();
-    }
-  }
-
   onRefresh() {
     this.setState({
       isRefreshing: true,
@@ -71,8 +50,17 @@ class List extends Component {
     this.fetchData();
   }
 
+  generateRequestUrl(storiesType) {
+    if (storiesType === 'topStories') {
+      return api.DN_TOP;
+    }
+    return api.DN_RECENT;
+  }
+
   fetchData() {
-    fetch(this.state.requestUrl)
+    const requestUrl = this.generateRequestUrl(this.props.storiesType);
+
+    fetch(requestUrl)
       .then((response) => response.json())
       .then((responseData) => {
         this.setState({
@@ -119,40 +107,34 @@ class List extends Component {
     }
 
     return (
-      <View style={styles.container}>
-        <TouchableOpacity onPress={() => this.onChangeSorting('recent')}>
-          <Text>Show Recent</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.onChangeSorting('top')}>
-          <Text>Show Top</Text>
-        </TouchableOpacity>
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this.renderRow}
-          renderSeparator={this.renderSeparator}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.isRefreshing}
-              onRefresh={this.onRefresh}
-              tintColor="#ff0000"
-              colors={['#ff0000', '#00ff00', '#0000ff']}
-              progressBackgroundColor="#ffff00"
-            />
-          }
-        />
-      </View>
+      <ListView
+        dataSource={this.state.dataSource}
+        renderRow={this.renderRow}
+        renderSeparator={this.renderSeparator}
+        style={styles.list}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.isRefreshing}
+            onRefresh={this.onRefresh}
+            tintColor="#ff0000"
+            colors={['#ff0000', '#00ff00', '#0000ff']}
+            progressBackgroundColor="#ffff00"
+          />
+        }
+      />
     );
   }
 }
 
 const styles = StyleSheet.create({
+  list: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
   loadingContainer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  container: {
-    flex: 1,
   },
   separator: {
     height: 1,
@@ -160,4 +142,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = List;
+export default List;

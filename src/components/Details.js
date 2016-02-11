@@ -58,11 +58,11 @@ class Details extends Component {
         />
         <View style={styles.footer}>
           <TouchableOpacity onPress={this.goBack}>
-            <Text>BACK</Text>
+            <Text style={styles.action}>{'<'}</Text>
           </TouchableOpacity>
 
           <TouchableOpacity onPress={this.showShareActionSheet}>
-            <Text>SHARE</Text>
+            <Text style={styles.action}>SHARE</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -73,7 +73,7 @@ class Details extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFF',
+    backgroundColor: '#EEE',
   },
   webview: {
     flex: 1,
@@ -82,11 +82,15 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#EFEFEF',
+    backgroundColor: 'black',
     height: 30,
-    padding: 15,
+    padding: 10,
   },
+  action: {
+    color: '#fff',
+
+  }
 });
 
 
-module.exports = Details;
+export default Details;

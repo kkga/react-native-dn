@@ -4,7 +4,7 @@ import React, {
   StyleSheet,
 } from 'react-native';
 
-import List from './List.js';
+import Home from './Home.js';
 import Details from './Details.js';
 
 class App extends Component {
@@ -17,7 +17,7 @@ class App extends Component {
     switch (route.name) {
       default:
       case 'List':
-        return <List navigator={navigator} />;
+        return <Home navigator={navigator} />;
       case 'Details':
         return (
           <Details

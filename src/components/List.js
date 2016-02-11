@@ -38,7 +38,7 @@ class List extends Component {
 
   onRowPress(rowData) {
     this.props.navigator.push({
-      name: 'Details',
+      name: 'Viewer',
       url: rowData.url,
     });
   }

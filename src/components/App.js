@@ -7,7 +7,7 @@ import React, {
 } from 'react-native';
 
 import Home from './Home';
-import Details from './Details';
+import Viewer from './Viewer';
 
 class App extends Component {
 
@@ -21,10 +21,10 @@ class App extends Component {
       case 'Home':
         StatusBarIOS.setHidden(false, 'slide');
         return <Home navigator={navigator} />;
-      case 'Details':
+      case 'Viewer':
         StatusBarIOS.setHidden(true, 'slide');
         return (
-          <Details
+          <Viewer
             navigator={navigator}
             url={route.url}
           />

@@ -5,11 +5,12 @@ import React, {
   View,
   WebView,
   TouchableOpacity,
+  Image,
   Text,
   ActionSheetIOS,
 } from 'react-native';
 
-class Details extends Component {
+class Viewer extends Component {
 
   static propTypes = {
     url: PropTypes.string.isRequired,
@@ -57,8 +58,8 @@ class Details extends Component {
           style={styles.webview}
         />
         <View style={styles.footer}>
-          <TouchableOpacity onPress={this.goBack}>
-            <Text style={styles.action}>{'<'}</Text>
+          <TouchableOpacity style={styles.backButton} onPress={this.goBack}>
+            <Image style={styles.backImg} source={require('../img/back.png')} />
           </TouchableOpacity>
 
           <TouchableOpacity onPress={this.showShareActionSheet}>
@@ -83,14 +84,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     backgroundColor: 'black',
-    height: 30,
-    padding: 10,
+    height: 28,
+    paddingHorizontal: 8,
+  },
+  backButton: {
+    width: 44,
+  },
+  backImg: {
+    opacity: 0.6,
   },
   action: {
     color: '#fff',
-
-  }
+    opacity: 0.8,
+    fontWeight: '600',
+  },
 });
 
 
-export default Details;
+export default Viewer;

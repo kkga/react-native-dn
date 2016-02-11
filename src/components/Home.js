@@ -6,7 +6,7 @@ import React, {
   Text,
 } from 'react-native';
 
-import List from './List.js';
+import List from './List';
 
 class Home extends Component {
 
@@ -64,4 +64,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = Home;
+export default Home;

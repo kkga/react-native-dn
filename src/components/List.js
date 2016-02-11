@@ -10,8 +10,8 @@ import React, {
   RefreshControl,
 } from 'react-native';
 
-import Story from './Story.js';
-import api from '../api.js';
+import Story from './Story';
+import api from '../api';
 
 class List extends Component {
 

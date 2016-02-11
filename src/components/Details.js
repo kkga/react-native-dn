@@ -89,4 +89,4 @@ const styles = StyleSheet.create({
 });
 
 
-module.exports = Details;
+export default Details;

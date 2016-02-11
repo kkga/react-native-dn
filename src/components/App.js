@@ -4,8 +4,8 @@ import React, {
   StyleSheet,
 } from 'react-native';
 
-import Home from './Home.js';
-import Details from './Details.js';
+import Home from './Home';
+import Details from './Details';
 
 class App extends Component {
 
@@ -46,4 +46,4 @@ const styles = StyleSheet.create({
   },
 });
 
-module.exports = App;
+export default App;

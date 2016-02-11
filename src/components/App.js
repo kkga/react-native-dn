@@ -16,7 +16,7 @@ class App extends Component {
   renderScene(route, navigator) {
     switch (route.name) {
       default:
-      case 'List':
+      case 'Home':
         return <Home navigator={navigator} />;
       case 'Details':
         return (
@@ -32,7 +32,7 @@ class App extends Component {
     return (
       <Navigator
         configureScene={this.configureScene}
-        initialRoute={{ name: 'List', index: 0 }}
+        initialRoute={{ name: 'Home', index: 0 }}
         renderScene={this.renderScene}
         style={styles.container}
       />

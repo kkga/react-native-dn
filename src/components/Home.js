@@ -1,11 +1,16 @@
 import React, {
   Component,
   TabBarIOS,
+  PropTypes,
 } from 'react-native';
 
 import List from './List';
 
 class Home extends Component {
+
+  static propTypes = {
+    navigator: PropTypes.object,
+  };
 
   constructor(props) {
     super(props);
@@ -16,7 +21,10 @@ class Home extends Component {
 
   renderTab(storiesType) {
     return (
-      <List storiesType={storiesType} />
+      <List
+        navigator={this.props.navigator}
+        storiesType={storiesType}
+      />
     );
   }
 
@@ -24,7 +32,8 @@ class Home extends Component {
     return (
       <TabBarIOS
         tintColor="white"
-        barTintColor="black">
+        barTintColor="black"
+      >
         <TabBarIOS.Item
           systemIcon="favorites"
           title="Top Stories"

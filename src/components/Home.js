@@ -34,11 +34,10 @@ class Home extends Component {
     return (
       <View style={styles.container}>
         <TabBarIOS
-          tintColor="white"
-          barTintColor="black"
+          tintColor="blue"
+          barTintColor="white"
         >
           <TabBarIOS.Item
-            systemIcon="favorites"
             title="Top Stories"
             selected={this.state.selectedTab === 'topStories'}
             onPress={() => {
@@ -50,7 +49,6 @@ class Home extends Component {
             {this.renderTab('topStories')}
           </TabBarIOS.Item>
           <TabBarIOS.Item
-            systemIcon="most-recent"
             title="Recent Stories"
             badge={this.state.notifCount > 0 ? this.state.notifCount : undefined}
             selected={this.state.selectedTab === 'recentStories'}

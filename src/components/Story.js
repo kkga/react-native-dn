@@ -5,13 +5,16 @@ import React, {
   Text,
   View,
   TouchableOpacity,
-  Image,
+  // Image,
 } from 'react-native';
+
+import moment from 'moment';
 
 class Story extends Component {
 
   static propTypes = {
     hostname: PropTypes.string,
+    badge: PropTypes.string,
     url: PropTypes.string,
     onPress: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
@@ -23,33 +26,43 @@ class Story extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      imageUrl: '',
+      imageUrl: null,
     };
   }
 
-  componentDidMount() {
-    this.fetchImage();
-  }
-
-  fetchImage() {
-    const readabilityAPI = 'https://readability.com/api/content/v1/';
-    const readabilityToken = 'b39e302e54e5e3dcfe3e3e721e8012e5d882cbdb';
-    const url = this.props.url;
-    const requestUrl = readabilityAPI + 'parser?url=' + url + '&token=' + readabilityToken;
-
-    fetch(requestUrl)
-      .then((response) => response.json())
-      .then((responseData) => {
-        this.setState({
-          imageUrl: responseData.lead_image_url,
-        });
-      });
-  }
+  // componentDidMount() {
+  //   if (this.props.url) {
+  //     this.fetchImage();
+  //   }
+  // }
+  //
+  // fetchImage() {
+  //   const ogAPI = 'http://opengraph.io/api/1.0/site/';
+  //   const requestUrl = ogAPI + this.props.url;
+  //
+  //   fetch(requestUrl)
+  //     .then((response) => response.json())
+  //     .then((responseData) => {
+  //       this.setState({
+  //         imageUrl: responseData.hybridGraph.image,
+  //       });
+  //     });
+  // }
+  //
+  // renderThumbnail() {
+  //   if (this.props.url) {
+  //     return (
+  //       <Image
+  //         source={{ uri: this.state.imageUrl }}
+  //         style={{ width: 80, height: 80 }}
+  //       />
+  //     );
+  //   }
+  // }
 
   render() {
     const topStory = this.props.vote_count > 50;
     const date = new Date(this.props.created_at);
-    const imageUrl = this.state.imageUrl;
 
     return (
       <TouchableOpacity onPress={this.props.onPress}>
@@ -65,21 +78,21 @@ class Story extends Component {
           <View style={styles.infoContainer}>
             <View style={styles.meta}>
               {this.props.hostname &&
-                <Text style={styles.source}>{this.props.hostname.toUpperCase()}</Text>
+                <Text style={styles.source}>{this.props.hostname}</Text>
               }
             </View>
+            {this.props.badge &&
+              <Text style={styles.badge}>{this.props.badge.toUpperCase()}</Text>
+            }
             <Text style={styles.title}>{this.props.title}</Text>
 
             <View style={styles.meta}>
-              <Text>{date.toDateString()}</Text>
               <Text>{this.props.comment_count} comments</Text>
+              <Text>{moment(date).fromNow()}</Text>
             </View>
           </View>
 
-          <Image
-            source={{ uri: imageUrl }}
-            style={{ width: 100, height: 100 }}
-          />
+          {/* {this.renderThumbnail} */}
         </View>
       </TouchableOpacity>
     );
@@ -114,18 +127,21 @@ const styles = StyleSheet.create({
     opacity: 0.65,
   },
   title: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '500',
     marginBottom: 12,
-    marginTop: 6,
+    marginTop: 4,
+  },
+  badge: {
+    fontSize: 14,
   },
   meta: {
     flexDirection: 'row',
     opacity: 0.5,
   },
   source: {
-    fontSize: 10,
-    fontWeight: '500',
+    fontSize: 14,
+    // fontWeight: '500',
   },
 });
 

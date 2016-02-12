@@ -68,7 +68,8 @@ class List extends Component {
           isLoading: false,
           isRefreshing: false,
         });
-      });
+      })
+      .done();
   }
 
   renderLoadingView() {

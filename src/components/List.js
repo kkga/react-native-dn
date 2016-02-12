@@ -93,6 +93,7 @@ class List extends Component {
         key={rowID}
         url={rowData.url}
         vote_count={rowData.vote_count}
+        badge={rowData.badge}
         created_at={rowData.created_at}
         comment_count={rowData.comment_count}
         onPress={() => this.onRowPress(rowData)} />

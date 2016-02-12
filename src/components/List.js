@@ -68,8 +68,7 @@ class List extends Component {
           isLoading: false,
           isRefreshing: false,
         });
-      })
-      .done();
+      });
   }
 
   renderLoadingView() {
@@ -92,12 +91,11 @@ class List extends Component {
         hostname={rowData.hostname}
         title={rowData.title}
         key={rowID}
-        id={rowData.id}
+        url={rowData.url}
         vote_count={rowData.vote_count}
         created_at={rowData.created_at}
         comment_count={rowData.comment_count}
-        onPress={() => this.onRowPress(rowData)}
-      />
+        onPress={() => this.onRowPress(rowData)} />
     );
   }
 

@@ -5,12 +5,14 @@ import React, {
   Text,
   View,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 
 class Story extends Component {
 
   static propTypes = {
     hostname: PropTypes.string,
+    url: PropTypes.string,
     onPress: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
     vote_count: PropTypes.number.isRequired,
@@ -18,9 +20,36 @@ class Story extends Component {
     comment_count: PropTypes.number.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      imageUrl: '',
+    };
+  }
+
+  componentDidMount() {
+    this.fetchImage();
+  }
+
+  fetchImage() {
+    const readabilityAPI = 'https://readability.com/api/content/v1/';
+    const readabilityToken = 'b39e302e54e5e3dcfe3e3e721e8012e5d882cbdb';
+    const url = this.props.url;
+    const requestUrl = readabilityAPI + 'parser?url=' + url + '&token=' + readabilityToken;
+
+    fetch(requestUrl)
+      .then((response) => response.json())
+      .then((responseData) => {
+        this.setState({
+          imageUrl: responseData.lead_image_url,
+        });
+      });
+  }
+
   render() {
     const topStory = this.props.vote_count > 50;
     const date = new Date(this.props.created_at);
+    const imageUrl = this.state.imageUrl;
 
     return (
       <TouchableOpacity onPress={this.props.onPress}>
@@ -43,10 +72,14 @@ class Story extends Component {
 
             <View style={styles.meta}>
               <Text>{date.toDateString()}</Text>
-              <Text> - {this.props.id} - </Text>
               <Text>{this.props.comment_count} comments</Text>
             </View>
           </View>
+
+          <Image
+            source={{ uri: imageUrl }}
+            style={{ width: 100, height: 100 }}
+          />
         </View>
       </TouchableOpacity>
     );

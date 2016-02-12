@@ -5,10 +5,11 @@ import React, {
   Text,
   View,
   TouchableOpacity,
-  // Image,
+  Image,
 } from 'react-native';
 
-import moment from 'moment';
+// import moment from 'moment';
+import Badge from './Badge.js';
 
 class Story extends Component {
 
@@ -48,52 +49,62 @@ class Story extends Component {
   //       });
   //     });
   // }
-  //
+
   // renderThumbnail() {
   //   if (this.props.url) {
   //     return (
   //       <Image
   //         source={{ uri: this.state.imageUrl }}
-  //         style={{ width: 80, height: 80 }}
+  //         style={{ width: 60, height: 60, borderRadius: 5 }}
   //       />
   //     );
   //   }
   // }
 
   render() {
-    const topStory = this.props.vote_count > 50;
-    const date = new Date(this.props.created_at);
+    // const date = new Date(this.props.created_at);
+    // const faviconUrl = 'http://icons.better-idea.org/icon?url=' + this.props.hostname + '&size=28';
+    const hasBadge = this.props.badge;
 
     return (
       <TouchableOpacity onPress={this.props.onPress}>
+
         <View style={styles.container}>
-          <View style={styles.voteContainer}>
-            <View style={[styles.voteLabel, topStory && styles.voteLabelTop]}>
+
+          <View style={styles.header}>
+            {hasBadge &&
+              <Badge type={this.props.badge} />
+            }
+
+            {this.props.hostname &&
+              <View style={styles.source}>
+                {/* <Image style={styles.favicon} source={{ uri: faviconUrl }} /> */}
+                <Text style={styles.hostname}>{this.props.hostname}</Text>
+              </View>
+            }
+          </View>
+
+          <View style={styles.body}>
+            <Text style={styles.title}>{this.props.title}</Text>
+          </View>
+
+          <View style={styles.footer}>
+            <View style={styles.vote}>
+              <Image style={styles.voteImg} source={require('../img/upvote.png')} />
               <Text style={styles.voteCount}>
                 {this.props.vote_count}
               </Text>
             </View>
-          </View>
-
-          <View style={styles.infoContainer}>
-            <View style={styles.meta}>
-              {this.props.hostname &&
-                <Text style={styles.source}>{this.props.hostname}</Text>
-              }
+            <View style={styles.comments}>
+              <Text style={styles.commentsText}>{this.props.comment_count} comments</Text>
             </View>
-            {this.props.badge &&
-              <Text style={styles.badge}>{this.props.badge.toUpperCase()}</Text>
-            }
-            <Text style={styles.title}>{this.props.title}</Text>
 
-            <View style={styles.meta}>
-              <Text>{this.props.comment_count} comments</Text>
+            {/* <View style={styles.meta}>
               <Text>{moment(date).fromNow()}</Text>
-            </View>
+            </View> */}
           </View>
-
-          {/* {this.renderThumbnail} */}
         </View>
+
       </TouchableOpacity>
     );
   }
@@ -101,48 +112,61 @@ class Story extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
+    paddingHorizontal: 12,
     paddingVertical: 12,
   },
-  voteContainer: {
-    flex: 1,
-    alignItems: 'center',
-  },
-  infoContainer: {
-    flex: 7,
-  },
-  voteLabel: {
-    paddingHorizontal: 4,
-    paddingVertical: 3,
-    borderRadius: 3,
-    width: 30,
-    backgroundColor: '#EFEFEF',
-  },
-  voteLabelTop: {
-    backgroundColor: 'green',
-  },
-  voteCount: {
-    fontSize: 12,
-    textAlign: 'center',
-    opacity: 0.65,
-  },
-  title: {
-    fontSize: 15,
-    fontWeight: '500',
-    marginBottom: 12,
-    marginTop: 4,
-  },
-  badge: {
-    fontSize: 14,
-  },
-  meta: {
+
+  header: {
     flexDirection: 'row',
-    opacity: 0.5,
   },
   source: {
-    fontSize: 14,
-    // fontWeight: '500',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
+  // favicon: {
+  //   width: 14,
+  //   height: 14,
+  //   marginRight: 4,
+  // },
+  hostname: {
+    fontSize: 13,
+    opacity: 0.6,
+  },
+
+  body: {
+    marginTop: 4,
+    marginBottom: 16,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: '600',
+  },
+
+  footer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  vote: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  voteCount: {
+    marginLeft: 4,
+    fontSize: 13,
+    fontWeight: '500',
+    color: '#2D72D9',
+  },
+  comments: {
+    marginLeft: 10,
+    paddingLeft: 10,
+    borderLeftWidth: 1,
+    borderColor: '#EFEFEF',
+  },
+  commentsText: {
+    fontSize: 13,
+    opacity: 0.7,
+  },
+
 });
 
 export default Story;

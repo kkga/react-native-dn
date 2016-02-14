@@ -12,7 +12,6 @@ import ListItem from './ListItem';
 import api from '../api';
 
 class List extends Component {
-
   static propTypes = {
     navigator: PropTypes.object,
     storiesType: PropTypes.oneOf(['topStories', 'recentStories']),

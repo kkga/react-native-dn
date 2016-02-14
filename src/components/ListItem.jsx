@@ -97,7 +97,7 @@ class ListItem extends Component {
 
   render() {
     const date = new Date(this.props.created_at);
-    const faviconUrl = 'http://icons.better-idea.org/icon?url=' + this.props.hostname + '&size=28';
+    const faviconUrl = 'http://icons.better-idea.org/icon?url=' + this.props.hostname + '&size=32';
     const hasBadge = this.props.badge;
 
     return (
@@ -157,8 +157,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   favicon: {
-    width: 14,
-    height: 14,
+    width: 16,
+    height: 16,
+    borderRadius: 3,
     marginRight: 4,
   },
   hostname: {

@@ -37,9 +37,8 @@ class Home extends Component {
           barTintColor="white"
         >
           <TabBarIOS.Item
-            title="Top Stories"
+            title="Top"
             icon={require('../img/top.png')}
-            selectedIcon={require('../img/top-selected.png')}
             selected={this.state.selectedTab === 'topStories'}
             onPress={() => {
               this.setState({
@@ -50,9 +49,8 @@ class Home extends Component {
             {this.renderTab('topStories')}
           </TabBarIOS.Item>
           <TabBarIOS.Item
-            title="Recent Stories"
+            title="Recent"
             icon={require('../img/recent.png')}
-            selectedIcon={require('../img/recent-selected.png')}
             selected={this.state.selectedTab === 'recentStories'}
             onPress={() => {
               this.setState({
@@ -63,22 +61,8 @@ class Home extends Component {
             {this.renderTab('recentStories')}
           </TabBarIOS.Item>
           <TabBarIOS.Item
-            title="Discussions"
-            icon={require('../img/discussions.png')}
-            selectedIcon={require('../img/discussions-selected.png')}
-            selected={this.state.selectedTab === 'discussions'}
-            onPress={() => {
-              this.setState({
-                selectedTab: 'discussions',
-              });
-            }}
-          >
-            {this.renderTab('recentStories')}
-          </TabBarIOS.Item>
-          <TabBarIOS.Item
             title="You"
             icon={require('../img/you.png')}
-            selectedIcon={require('../img/you-selected.png')}
             selected={this.state.selectedTab === 'you'}
             onPress={() => {
               this.setState({

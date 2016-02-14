@@ -36,8 +36,8 @@ class Badge extends Component {
 const styles = StyleSheet.create({
   container: {
     marginRight: 6,
-    paddingHorizontal: 4,
-    paddingVertical: 2,
+    paddingHorizontal: 3,
+    paddingVertical: 1,
     borderRadius: 3,
   },
   text: {

@@ -8,7 +8,27 @@ import React, {
   Image,
 } from 'react-native';
 
-// import moment from 'moment';
+import api from '../api';
+import moment from 'moment';
+
+moment.locale('en', {
+    relativeTime : {
+        future: "in %s",
+        past:   "%s ago",
+        s:  "s",
+        m:  "1m",
+        mm: "%dm",
+        h:  "1h",
+        hh: "%dh",
+        d:  "1d",
+        dd: "%dd",
+        M:  "1mth",
+        MM: "%dmth",
+        y:  "1yr",
+        yy: "%dyr"
+    }
+});
+
 import Badge from './Badge.js';
 
 class Story extends Component {
@@ -16,6 +36,7 @@ class Story extends Component {
   static propTypes = {
     hostname: PropTypes.string,
     badge: PropTypes.string,
+    user: PropTypes.string,
     url: PropTypes.string,
     onPress: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
@@ -28,14 +49,13 @@ class Story extends Component {
     super(props);
     this.state = {
       imageUrl: null,
+      userName: null,
     };
   }
 
-  // componentDidMount() {
-  //   if (this.props.url) {
-  //     this.fetchImage();
-  //   }
-  // }
+  componentDidMount() {
+    this.fetchUserName();
+  }
   //
   // fetchImage() {
   //   const ogAPI = 'http://opengraph.io/api/1.0/site/';
@@ -61,8 +81,23 @@ class Story extends Component {
   //   }
   // }
 
+  fetchUserName() {
+    fetch(api.DN_USERS + this.props.user)
+      .then((response) => response.json())
+      .then((responseData) => responseData.users[0].display_name)
+      .then((responseUserName) => {
+        this.setState({
+          userName: responseUserName,
+        });
+      })
+      .catch((error) => {
+        console.warn(error);
+      });
+  }
+
+
   render() {
-    // const date = new Date(this.props.created_at);
+    const date = new Date(this.props.created_at);
     // const faviconUrl = 'http://icons.better-idea.org/icon?url=' + this.props.hostname + '&size=28';
     const hasBadge = this.props.badge;
 
@@ -95,13 +130,12 @@ class Story extends Component {
                 {this.props.vote_count}
               </Text>
             </View>
-            <View style={styles.comments}>
-              <Text style={styles.commentsText}>{this.props.comment_count} comments</Text>
+            <View style={styles.metaBlock}>
+              <Text style={styles.metaText}>{this.props.comment_count} comments</Text>
             </View>
-
-            {/* <View style={styles.meta}>
-              <Text>{moment(date).fromNow()}</Text>
-            </View> */}
+            <View style={styles.metaBlock}>
+              <Text style={styles.metaText}>{moment(date).fromNow()} by {this.state.userName}</Text>
+            </View>
           </View>
         </View>
 
@@ -130,7 +164,7 @@ const styles = StyleSheet.create({
   // },
   hostname: {
     fontSize: 13,
-    opacity: 0.6,
+    opacity: 0.65,
   },
 
   body: {
@@ -156,15 +190,15 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#2D72D9',
   },
-  comments: {
+  metaBlock: {
     marginLeft: 10,
     paddingLeft: 10,
     borderLeftWidth: 1,
     borderColor: '#EFEFEF',
   },
-  commentsText: {
+  metaText: {
     fontSize: 13,
-    opacity: 0.7,
+    opacity: 0.65,
   },
 
 });

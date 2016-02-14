@@ -69,6 +69,9 @@ class List extends Component {
           isRefreshing: false,
         });
       })
+      .catch((error) => {
+        console.warn(error);
+      })
       .done();
   }
 
@@ -92,6 +95,7 @@ class List extends Component {
         hostname={rowData.hostname}
         title={rowData.title}
         key={rowID}
+        user={rowData.links.user}
         url={rowData.url}
         vote_count={rowData.vote_count}
         badge={rowData.badge}

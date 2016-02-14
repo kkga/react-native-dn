@@ -12,27 +12,26 @@ import api from '../api';
 import moment from 'moment';
 
 moment.locale('en', {
-    relativeTime : {
-        future: "in %s",
-        past:   "%s ago",
-        s:  "s",
-        m:  "1m",
-        mm: "%dm",
-        h:  "1h",
-        hh: "%dh",
-        d:  "1d",
-        dd: "%dd",
-        M:  "1mth",
-        MM: "%dmth",
-        y:  "1yr",
-        yy: "%dyr"
-    }
+  relativeTime: {
+    future: 'in %s',
+    past: '%s ago',
+    s: 's',
+    m: '1m',
+    mm: '%dm',
+    h: '1h',
+    hh: '%dh',
+    d: '1d',
+    dd: '%dd',
+    M: '1mth',
+    MM: '%dmth',
+    y: '1yr',
+    yy: '%dyr',
+  },
 });
 
-import Badge from './Badge.js';
+import Badge from './Badge';
 
-class Story extends Component {
-
+class ListItem extends Component {
   static propTypes = {
     hostname: PropTypes.string,
     badge: PropTypes.string,
@@ -98,7 +97,7 @@ class Story extends Component {
 
   render() {
     const date = new Date(this.props.created_at);
-    // const faviconUrl = 'http://icons.better-idea.org/icon?url=' + this.props.hostname + '&size=28';
+    const faviconUrl = 'http://icons.better-idea.org/icon?url=' + this.props.hostname + '&size=28';
     const hasBadge = this.props.badge;
 
     return (
@@ -113,7 +112,7 @@ class Story extends Component {
 
             {this.props.hostname &&
               <View style={styles.source}>
-                {/* <Image style={styles.favicon} source={{ uri: faviconUrl }} /> */}
+                 <Image style={styles.favicon} source={{ uri: faviconUrl }} />
                 <Text style={styles.hostname}>{this.props.hostname}</Text>
               </View>
             }
@@ -157,11 +156,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  // favicon: {
-  //   width: 14,
-  //   height: 14,
-  //   marginRight: 4,
-  // },
+  favicon: {
+    width: 14,
+    height: 14,
+    marginRight: 4,
+  },
   hostname: {
     fontSize: 13,
     opacity: 0.65,
@@ -203,4 +202,4 @@ const styles = StyleSheet.create({
 
 });
 
-export default Story;
+export default ListItem;

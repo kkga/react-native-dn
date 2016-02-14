@@ -8,7 +8,7 @@ import React, {
   RefreshControl,
 } from 'react-native';
 
-import Story from './Story';
+import ListItem from './ListItem';
 import api from '../api';
 
 class List extends Component {
@@ -69,9 +69,7 @@ class List extends Component {
           isRefreshing: false,
         });
       })
-      .catch((error) => {
-        console.warn(error);
-      })
+      .catch((error) => { console.warn(error); })
       .done();
   }
 
@@ -91,7 +89,7 @@ class List extends Component {
 
   renderRow(rowData, rowID) {
     return (
-      <Story
+      <ListItem
         hostname={rowData.hostname}
         title={rowData.title}
         key={rowID}
@@ -101,7 +99,8 @@ class List extends Component {
         badge={rowData.badge}
         created_at={rowData.created_at}
         comment_count={rowData.comment_count}
-        onPress={() => this.onRowPress(rowData)} />
+        onPress={() => this.onRowPress(rowData)}
+      />
     );
   }
 

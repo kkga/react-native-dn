@@ -9,7 +9,6 @@ import React, {
 import badgeColors from '../styles/badgeColors';
 
 class Badge extends Component {
-
   static propTypes = {
     type: PropTypes.string.isRequired,
   };

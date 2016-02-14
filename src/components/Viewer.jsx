@@ -11,7 +11,6 @@ import React, {
 } from 'react-native';
 
 class Viewer extends Component {
-
   static propTypes = {
     url: PropTypes.string.isRequired,
     navigator: PropTypes.object,

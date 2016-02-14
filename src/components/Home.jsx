@@ -9,7 +9,6 @@ import React, {
 import List from './List';
 
 class Home extends Component {
-
   static propTypes = {
     navigator: PropTypes.object,
   };
@@ -54,7 +53,6 @@ class Home extends Component {
             title="Recent Stories"
             icon={require('../img/recent.png')}
             selectedIcon={require('../img/recent-selected.png')}
-            badge={this.state.notifCount > 0 ? this.state.notifCount : undefined}
             selected={this.state.selectedTab === 'recentStories'}
             onPress={() => {
               this.setState({
@@ -68,7 +66,6 @@ class Home extends Component {
             title="Discussions"
             icon={require('../img/discussions.png')}
             selectedIcon={require('../img/discussions-selected.png')}
-            badge={this.state.notifCount > 0 ? this.state.notifCount : undefined}
             selected={this.state.selectedTab === 'discussions'}
             onPress={() => {
               this.setState({
@@ -82,7 +79,6 @@ class Home extends Component {
             title="You"
             icon={require('../img/you.png')}
             selectedIcon={require('../img/you-selected.png')}
-            badge={this.state.notifCount > 0 ? this.state.notifCount : undefined}
             selected={this.state.selectedTab === 'you'}
             onPress={() => {
               this.setState({

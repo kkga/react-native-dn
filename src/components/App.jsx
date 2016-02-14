@@ -10,7 +10,6 @@ import Home from './Home';
 import Viewer from './Viewer';
 
 class App extends Component {
-
   configureScene() {
     return Navigator.SceneConfigs.FloatFromRight;
   }

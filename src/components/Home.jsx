@@ -7,6 +7,7 @@ import React, {
 } from 'react-native';
 
 import List from './List';
+import Profile from './Profile';
 
 class Home extends Component {
   static propTypes = {
@@ -20,11 +21,15 @@ class Home extends Component {
     };
   }
 
-  renderTab(storiesType) {
+  renderTab(tab) {
+    if (tab === 'profile') {
+      return <Profile />
+    }
+
     return (
       <List
         navigator={this.props.navigator}
-        storiesType={storiesType}
+        storiesType={tab}
       />
     );
   }
@@ -63,14 +68,14 @@ class Home extends Component {
           <TabBarIOS.Item
             title="You"
             icon={require('../img/you.png')}
-            selected={this.state.selectedTab === 'you'}
+            selected={this.state.selectedTab === 'profile'}
             onPress={() => {
               this.setState({
-                selectedTab: 'you',
+                selectedTab: 'profile',
               });
             }}
           >
-            {this.renderTab('recentStories')}
+            {this.renderTab('profile')}
           </TabBarIOS.Item>
         </TabBarIOS>
 
